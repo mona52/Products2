@@ -1,7 +1,7 @@
 package ru.netology.manager;
 
+import ru.netology.domain.NotFoundException;
 import ru.netology.domain.Product;
-import ru.netology.domain.Book;
 import ru.netology.repository.ProductRepository;
 
 public class ProductManager {
@@ -26,7 +26,7 @@ public class ProductManager {
     public void removeById(int id) {
         if (repository.findById(id) == null) {
             System.out.println("Element with id: " + id + " not found");
-            throw new Book.NotFoundException(id);
+            throw new NotFoundException(id);
         }
         repository.removeById(id);
         System.out.println("manager done"); // for demo only

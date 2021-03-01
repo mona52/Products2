@@ -3,6 +3,7 @@ package ru.netology.manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Book;
+import ru.netology.domain.NotFoundException;
 import ru.netology.domain.TShirt;
 import ru.netology.domain.Product;
 import ru.netology.repository.ProductRepository;
@@ -37,6 +38,6 @@ class ProductTest {
 
     @Test
     void removeByNonExistId() {
-        assertThrows(Book.NotFoundException.class, () -> manager.removeById(5));
+        assertThrows(NotFoundException.class, () -> manager.removeById(5));
     }
 }
