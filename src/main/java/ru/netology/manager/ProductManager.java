@@ -2,7 +2,6 @@ package ru.netology.manager;
 
 import ru.netology.domain.Product;
 import ru.netology.domain.Book;
-import ru.netology.domain.TShirt;
 import ru.netology.repository.ProductRepository;
 
 public class ProductManager {
@@ -19,55 +18,24 @@ public class ProductManager {
         repository.save(item);
     }
 
-    public Product[] searchBy(String text) {
-        Product[] result = new Product[0];
-        for (Product product : repository.findAll()) {
-            if (matches(product, text)) {
-                Product[] tmp = new Product[result.length + 1];
-                System.arraycopy(result, 0, tmp, 0, result.length);
-                tmp[tmp.length - 1] = product;
-                result = tmp;
-            }
-        }
+    public Product[] getAll() {
+        Product[] result = repository.findAll();
         return result;
     }
 
-    public boolean matches(Product product, String search) {
-
-        String searchLowerCase = search.toLowerCase();
-
-        if (product instanceof Book) {
-            Book book = (Book) product;
-            String bookLowerCase = book.getName().toLowerCase();
-            String authorLowerCase = book.getAuthor().toLowerCase();
-
-            if (bookLowerCase.contains(searchLowerCase)) {
-                return true;
-            }
-            if (authorLowerCase.contains(searchLowerCase)) {
-                return true;
-            }
-        }
-
-        if (product instanceof TShirt) {
-            TShirt tShirt = (TShirt) product;
-            String smartphoneLowerCase = tShirt.getName().toLowerCase();
-            String producerLowerCase = tShirt.getProducer().toLowerCase();
-
-            if (smartphoneLowerCase.contains(searchLowerCase)) {
-                return true;
-            }
-            if (producerLowerCase.contains(searchLowerCase)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     public void removeById(int id) {
+        if (repository.findById(id) == null) {
+            System.out.println("Element with id: " + id + " not found");
+            throw new Book.NotFoundException(id);
+        }
         repository.removeById(id);
+        System.out.println("manager done"); // for demo only
     }
-
 }
+
+
+
+
+
+
 
